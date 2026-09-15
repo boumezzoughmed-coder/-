@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كودولوجي — مدونة تقنية وبرمجة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14132A;
+    --surface:#1E1D3D;
+    --surface-2:#262550;
+    --paper:#F5F3FF;
+    --text:#F5F3FF;
+    --text-dim:#ABA7D6;
+    --coral:#FF5D5D;
+    --mint:#4ADE80;
+    --yellow:#FFD23F;
+    --cyan:#4EC3F7;
+    --border:rgba(245,243,255,.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Tajawal', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(20,19,42,.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav{display:flex; align-items:center; justify-content:space-between; height:76px;}
+  .logo{
+    font-weight:900; font-size:1.5rem; letter-spacing:-.02em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo-dot{width:10px; height:10px; border-radius:50%; background:var(--coral); display:inline-block;}
+  nav ul{list-style:none; display:flex; gap:34px;}
+  nav a{color:var(--text-dim); text-decoration:none; font-weight:500; font-size:.98rem; transition:color .2s;}
+  nav a:hover{color:var(--text);}
+  .nav-cta{
+    background:var(--yellow); color:var(--bg); padding:10px 22px;
+    border-radius:6px; font-weight:700; font-size:.95rem; border:none; cursor:pointer;
+  }
+  .menu-btn{display:none; background:none; border:none; color:var(--text); font-size:1.6rem; cursor:pointer;}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:76px 0 64px; display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center;}
+  .hero h1{
+    font-size:3.2rem; font-weight:900; line-height:1.18; letter-spacing:-.01em;
+    color:var(--yellow);
+    margin-bottom:22px;
+  }
+  .hero p{color:var(--text-dim); font-size:1.15rem; max-width:520px; margin-bottom:30px;}
+  .hero-actions{display:flex; gap:14px;}
+  .btn-primary{
+    background:var(--coral); color:var(--bg); padding:14px 28px; border-radius:6px;
+    font-weight:800; text-decoration:none; font-size:1rem; border:2px solid var(--coral);
+    transition:.2s;
+  }
+  .btn-primary:hover{background:transparent; color:var(--coral);}
+  .btn-ghost{
+    color:var(--text); padding:14px 28px; border-radius:6px; text-decoration:none;
+    font-weight:700; border:2px solid var(--border); font-size:1rem; transition:.2s;
+  }
+  .btn-ghost:hover{border-color:var(--text-dim);}
+
+  .terminal{
+    background:var(--surface); border:2px solid var(--surface-2); border-radius:14px;
+    overflow:hidden; box-shadow:0 24px 60px -20px rgba(0,0,0,.6);
+  }
+  .terminal-bar{
+    display:flex; gap:7px; padding:14px 16px; background:var(--surface-2);
+  }
+  .dot{width:11px; height:11px; border-radius:50%;}
+  .term-body{padding:26px; font-size:.92rem;}
+  .term-body .line{margin-bottom:10px; white-space:pre;}
+  .c-mint{color:var(--mint);} .c-cyan{color:var(--cyan);} .c-yellow{color:var(--yellow);} .c-dim{color:var(--text-dim);} .c-coral{color:var(--coral);}
+  .caret{display:inline-block; width:8px; height:16px; background:var(--yellow); vertical-align:middle; animation:blink 1s steps(1) infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  /* ---------- Section heading ---------- */
+  .section-head{display:flex; align-items:baseline; justify-content:space-between; margin:70px 0 30px; flex-wrap:wrap; gap:10px;}
+  .section-head h2{font-size:1.9rem; font-weight:800;}
+  .section-head span{color:var(--text-dim); font-size:.98rem;}
+
+  /* ---------- Featured post ---------- */
+  .featured{
+    display:grid; grid-template-columns:1fr 1fr; gap:0;
+    background:var(--surface); border-radius:16px; overflow:hidden;
+    border:1px solid var(--border); margin-bottom:44px; cursor:pointer;
+  }
+  .featured-visual{
+    background:linear-gradient(135deg, var(--coral), #FF9472);
+    display:flex; align-items:center; justify-content:center; padding:40px;
+  }
+  .featured-visual .big-mono{font-family:'IBM Plex Mono', monospace; font-size:5.5rem; font-weight:500; color:rgba(20,19,42,.85);}
+  .featured-content{padding:44px;}
+  .tag{
+    display:inline-block; font-size:.82rem; font-weight:700; padding:5px 14px;
+    border-radius:100px; margin-bottom:16px;
+  }
+  .tag-coral{background:rgba(255,93,93,.16); color:var(--coral);}
+  .tag-mint{background:rgba(74,222,128,.16); color:var(--mint);}
+  .tag-yellow{background:rgba(255,210,63,.16); color:var(--yellow);}
+  .tag-cyan{background:rgba(78,195,247,.16); color:var(--cyan);}
+  .featured-content h3{font-size:1.7rem; font-weight:800; margin-bottom:14px; line-height:1.35;}
+  .featured-content p{color:var(--text-dim); margin-bottom:20px;}
+  .meta{display:flex; gap:16px; color:var(--text-dim); font-size:.88rem;}
+
+  /* ---------- Grid ---------- */
+  .grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:26px;}
+  .card{
+    background:var(--surface); border-radius:10px; overflow:hidden; cursor:pointer;
+    border:1px solid var(--border); transition:transform .2s, border-color .2s;
+    display:flex; flex-direction:column;
+  }
+  .card:hover{transform:translateY(-4px); border-color:var(--text-dim);}
+  .card-bar{height:6px;}
+  .bar-coral{background:var(--coral);} .bar-mint{background:var(--mint);} .bar-yellow{background:var(--yellow);} .bar-cyan{background:var(--cyan);}
+  .card-body{padding:26px; flex:1; display:flex; flex-direction:column;}
+  .card h4{font-size:1.2rem; font-weight:800; margin:12px 0 10px; line-height:1.4;}
+  .card p{color:var(--text-dim); font-size:.93rem; margin-bottom:18px; flex:1;}
+
+  /* ---------- Newsletter ---------- */
+  .newsletter{
+    margin:90px 0 60px; background:var(--surface); border:1px solid var(--border);
+    border-radius:16px; padding:52px; display:grid; grid-template-columns:1.2fr .8fr; gap:30px; align-items:center;
+  }
+  .newsletter h3{font-size:1.7rem; font-weight:800; margin-bottom:10px;}
+  .newsletter p{color:var(--text-dim);}
+  .sub-form{display:flex; gap:10px;}
+  .sub-form input{
+    flex:1; padding:14px 18px; border-radius:6px; border:1px solid var(--border);
+    background:var(--bg); color:var(--text); font-family:inherit; font-size:.95rem;
+  }
+  .sub-form input::placeholder{color:var(--text-dim);}
+  .sub-form button{
+    background:var(--mint); color:var(--bg); border:none; padding:14px 24px;
+    border-radius:6px; font-weight:800; cursor:pointer; font-size:.95rem;
+  }
+
+  footer{border-top:1px solid var(--border); padding:36px 0; color:var(--text-dim); font-size:.9rem;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  footer a{color:var(--text-dim); text-decoration:none; margin-inline-start:18px;}
+  footer a:hover{color:var(--text);}
+
+  /* ---------- Reader overlay ---------- */
+  .overlay{
+    position:fixed; inset:0; background:rgba(10,9,26,.86); backdrop-filter:blur(4px);
+    display:none; align-items:flex-start; justify-content:center; z-index:100; padding:48px 20px; overflow-y:auto;
+  }
+  .overlay.open{display:flex;}
+  .reader{
+    background:var(--surface); max-width:720px; width:100%; border-radius:16px; padding:52px;
+    border:1px solid var(--border); position:relative;
+  }
+  .reader-close{
+    position:absolute; top:24px; left:24px; background:var(--surface-2); border:none; color:var(--text);
+    width:38px; height:38px; border-radius:50%; font-size:1.1rem; cursor:pointer;
+  }
+  .reader h2{font-size:1.9rem; font-weight:800; margin:14px 0 8px; line-height:1.4;}
+  .reader .meta{margin-bottom:26px;}
+  .reader p{margin-bottom:18px; color:#DEDCF7; font-size:1.02rem;}
+
+  @media(max-width:860px){
+    .hero{grid-template-columns:1fr; padding-top:40px;}
+    .hero h1{font-size:2.2rem;}
+    nav ul{
+      position:fixed; inset-inline-end:0; top:76px; height:calc(100vh - 76px);
+      background:var(--bg); flex-direction:column; width:240px; padding:30px; gap:24px;
+      transform:translateX(100%); transition:transform .25s; border-inline-start:1px solid var(--border);
+    }
+    html[dir="rtl"] nav ul{transform:translateX(-100%);}
+    nav ul.open{transform:translateX(0);}
+    .menu-btn{display:block;}
+    .nav-cta{display:none;}
+    .featured{grid-template-columns:1fr;}
+    .featured-visual{padding:26px;}
+    .grid{grid-template-columns:1fr;}
+    .newsletter{grid-template-columns:1fr; padding:32px;}
+    .sub-form{flex-direction:column;}
+    .reader{padding:30px 22px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo"><span class="logo-dot"></span>كودولوجي</div>
+    <nav><ul id="navList">
+      <li><a href="#">الرئيسية</a></li>
+      <li><a href="#">برمجة</a></li>
+      <li><a href="#">ذكاء اصطناعي</a></li>
+      <li><a href="#">أدوات المطور</a></li>
+      <li><a href="#">أمان</a></li>
+    </ul></nav>
+    <button class="nav-cta">اشترك مجانًا</button>
+    <button class="menu-btn" id="menuBtn">☰</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <h1>نكتب عن البرمجة بلغة يفهمها المطوّرون فعلًا</h1>
+      <p>مقالات وتجارب عملية في تطوير الويب والذكاء الاصطناعي وأدوات المطورين، من مطورين عرب لمطورين عرب.</p>
+      <div class="hero-actions">
+        <a href="#latest" class="btn-primary">تصفح أحدث المقالات</a>
+        <a href="#" class="btn-ghost">عن المدونة</a>
+      </div>
+    </div>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="dot" style="background:#FF5D5D"></span>
+        <span class="dot" style="background:#FFD23F"></span>
+        <span class="dot" style="background:#4ADE80"></span>
+      </div>
+      <div class="term-body mono">
+        <div class="line c-dim">// اليوم في كودولوجي</div>
+        <div class="line"><span class="c-cyan">const</span> <span class="c-mint">developer</span> = <span class="c-yellow">'أنت'</span>;</div>
+        <div class="line"><span class="c-cyan">function</span> <span class="c-mint">تعلّم</span>(موضوع) {</div>
+        <div class="line">&nbsp;&nbsp;<span class="c-coral">return</span> موضوع + <span class="c-yellow">' + خبرة'</span>;</div>
+        <div class="line">}</div>
+        <div class="line c-dim">// اقرأ. جرّب. انشر.<span class="caret"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="latest" class="section-head">
+    <h2>أحدث المقالات</h2>
+    <span>٥ مقالات هذا الأسبوع</span>
+  </div>
+
+  <div class="featured" onclick="openPost('p0')">
+    <div class="featured-visual"><span class="big-mono">AI</span></div>
+    <div class="featured-content">
+      <span class="tag tag-mint">ذكاء اصطناعي</span>
+      <h3>كيف تبني أول مساعد ذكي فعلي بدون خبرة سابقة</h3>
+      <p>دليل عملي خطوة بخطوة لبناء تطبيق مدعوم بنماذج اللغة، من اختيار الـ API إلى نشر أول نسخة تعمل.</p>
+      <div class="meta"><span>2 سبتمبر 2026</span><span>٩ دقائق قراءة</span></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card" onclick="openPost('p1')">
+      <div class="card-bar bar-coral"></div>
+      <div class="card-body">
+        <span class="tag tag-coral">برمجة</span>
+        <h4>خمس عادات في كتابة الأكواد تجعل فريقك يشكرك لاحقًا</h4>
+        <p>ليست كل الكود الصحيح كودًا جيدًا. إليك ما تعلمته من مراجعة آلاف الطلبات.</p>
+        <div class="meta"><span>28 أغسطس 2026</span><span>٦ دقائق</span></div>
+      </div>
+    </div>
+    <div class="card" onclick="openPost('p2')">
+      <div class="card-bar bar-cyan"></div>
+      <div class="card-body">
+        <span class="tag tag-cyan">أمان</span>
+        <h4>أخطاء أمان شائعة في واجهات الـ API وكيف تتجنبها</h4>
+        <p>من المصادقة الضعيفة إلى تسريب البيانات في الأخطاء، نظرة على أكثر الثغرات تكرارًا.</p>
+        <div class="meta"><span>21 أغسطس 2026</span><span>٧ دقائق</span></div>
+      </div>
+    </div>
+    <div class="card" onclick="openPost('p3')">
+      <div class="card-bar bar-yellow"></div>
+      <div class="card-body">
+        <span class="tag tag-yellow">أدوات المطور</span>
+        <h4>أدوات سطر الأوامر التي غيّرت طريقة عملي اليومية</h4>
+        <p>مجموعة مختارة من الأدوات الخفيفة التي توفر وقتًا حقيقيًا كل يوم.</p>
+        <div class="meta"><span>14 أغسطس 2026</span><span>٥ دقائق</span></div>
+      </div>
+    </div>
+    <div class="card" onclick="openPost('p4')">
+      <div class="card-bar bar-mint"></div>
+      <div class="card-body">
+        <span class="tag tag-mint">ذكاء اصطناعي</span>
+        <h4>هندسة الطلبات: مهارة صغيرة بفارق كبير</h4>
+        <p>كيف تصيغ طلبك للنموذج اللغوي لتحصل على نتائج أدق من أول محاولة.</p>
+        <div class="meta"><span>7 أغسطس 2026</span><span>٤ دقائق</span></div>
+      </div>
+    </div>
+    <div class="card" onclick="openPost('p5')">
+      <div class="card-bar bar-coral"></div>
+      <div class="card-body">
+        <span class="tag tag-coral">برمجة</span>
+        <h4>لماذا تبدو مشاريعك الشخصية دائمًا ناقصة؟</h4>
+        <p>الفرق بين مشروع جانبي منتهٍ ومشروع عالق في مرحلة "شبه جاهز" إلى الأبد.</p>
+        <div class="meta"><span>30 يوليو 2026</span><span>٦ دقائق</span></div>
+      </div>
+    </div>
+    <div class="card" onclick="openPost('p6')">
+      <div class="card-bar bar-cyan"></div>
+      <div class="card-body">
+        <span class="tag tag-cyan">أمان</span>
+        <h4>دليل سريع لتأمين حساباتك التطويرية</h4>
+        <p>خطوات بسيطة تقلل احتمالية اختراق حساباتك على GitHub وخدمات النشر.</p>
+        <div class="meta"><span>23 يوليو 2026</span><span>٥ دقائق</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="newsletter">
+    <div>
+      <h3>مقال جديد كل أسبوع في بريدك</h3>
+      <p>بدون إزعاج، وبدون رسائل تسويقية. فقط المحتوى الذي يستحق وقتك.</p>
+    </div>
+    <div class="sub-form">
+      <input type="email" placeholder="بريدك الإلكتروني">
+      <button onclick="alert('شكرًا لاشتراكك! (نموذج تجريبي)')">اشتراك</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:12px;">
+    <span>© 2026 كودولوجي</span>
+    <div><a href="#">تويتر</a><a href="#">GitHub</a><a href="#">RSS</a></div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay">
+  <div class="reader">
+    <button class="reader-close" onclick="closePost()">✕</button>
+    <span class="tag" id="readerTag"></span>
+    <h2 id="readerTitle"></h2>
+    <div class="meta" id="readerMeta"></div>
+    <div id="readerBody"></div>
+  </div>
+</div>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const navList = document.getElementById('navList');
+  menuBtn.addEventListener('click', () => navList.classList.toggle('open'));
+
+  const posts = {
+    p0: {tag:'ذكاء اصطناعي', tagClass:'tag-mint', title:'كيف تبني أول مساعد ذكي فعلي بدون خبرة سابقة', meta:'2 سبتمبر 2026 · ٩ دقائق قراءة',
+      body:[
+        'لم يعد بناء تطبيق مدعوم بالذكاء الاصطناعي يتطلب فريقًا متخصصًا أو ميزانية ضخمة. اليوم يمكن لمطور واحد أن ينشئ مساعدًا يجيب على أسئلة العملاء أو يلخص المستندات خلال يوم عمل واحد.',
+        'الخطوة الأولى هي تحديد المهمة بدقة: ماذا يفعل المساعد بالضبط، وما الذي لن يفعله. المشاريع التي تبدأ بنطاق واسع جدًا غالبًا ما تتعثر لأن كل حالة استخدام تحتاج ضبطًا مختلفًا.',
+        'بعد ذلك يأتي اختيار الواجهة البرمجية المناسبة، وكتابة تعليمات واضحة للنموذج تشرح السياق والحدود، ثم اختبار الاستجابات على أمثلة حقيقية قبل أي نشر. التكرار السريع هنا أهم من الكمال من أول مرة.',
+        'أخيرًا، لا تنسَ قياس الأداء بعد الإطلاق. راقب الأسئلة التي يفشل المساعد في الإجابة عليها جيدًا، فهي أفضل مصدر لتحسين التعليمات في النسخة التالية.'
+      ]},
+    p1: {tag:'برمجة', tagClass:'tag-coral', title:'خمس عادات في كتابة الأكواد تجعل فريقك يشكرك لاحقًا', meta:'28 أغسطس 2026 · ٦ دقائق',
+      body:[
+        'الكود الذي يعمل ليس بالضرورة كودًا جيدًا. الفرق يظهر بعد ستة أشهر، حين يفتح شخص آخر الملف نفسه ويحاول فهمه تحت ضغط الوقت.',
+        'أول عادة هي تسمية المتغيرات والدوال بما تفعله فعلًا، لا بما يبدو مختصرًا. ثاني عادة هي إبقاء كل دالة تقوم بمهمة واحدة فقط، فهذا يجعل الاختبار والتعديل أسهل بكثير.',
+        'العادة الثالثة هي كتابة تعليق يشرح "لماذا" وليس "ماذا"، لأن الكود نفسه يوضح ماذا يفعل، لكنه نادرًا ما يشرح سبب القرار. أما الرابعة فهي تقسيم طلبات المراجعة إلى أجزاء صغيرة يسهل فهمها، والخامسة هي حذف الكود الميت فور ملاحظته بدل تركه "للاحقًا".'
+      ]},
+    p2: {tag:'أمان', tagClass:'tag-cyan', title:'أخطاء أمان شائعة في واجهات الـ API وكيف تتجنبها', meta:'21 أغسطس 2026 · ٧ دقائق',
+      body:[
+        'كثير من الثغرات الأمنية في واجهات البرمجة لا تنتج عن هجمات معقدة، بل عن تفاصيل بسيطة تم تجاهلها أثناء التطوير السريع.',
+        'من أكثر الأخطاء شيوعًا إرجاع رسائل خطأ مفصلة جدًا تكشف بنية قاعدة البيانات أو مسارات الخادم. كذلك الاعتماد على مفاتيح ثابتة بدل نظام تحقق قابل للإلغاء يجعل أي تسريب كارثيًا وطويل الأثر.',
+        'خطأ آخر هو عدم تقييد عدد الطلبات لكل مستخدم، مما يفتح الباب أمام إساءة الاستخدام. الحل غالبًا بسيط: طبقة تحقق موحدة، رسائل خطأ عامة للمستخدم النهائي مع تسجيل تفصيلي داخلي فقط، وحد أقصى واضح للطلبات.'
+      ]},
+    p3: {tag:'أدوات المطور', tagClass:'tag-yellow', title:'أدوات سطر الأوامر التي غيّرت طريقة عملي اليومية', meta:'14 أغسطس 2026 · ٥ دقائق',
+      body:[
+        'أدوات سطر الأوامر لا تحصل على التقدير الذي تستحقه، رغم أنها غالبًا أسرع وأخف من أي تطبيق رسومي مكافئ.', 
+        'أداة للبحث السريع داخل الملفات توفر دقائق يوميًا مقارنة بالبحث التقليدي، وأداة لإدارة إصدارات الأدوات المختلفة تنهي مشكلة "تعمل على جهازي فقط" نهائيًا.',
+        'الإضافة الأهم كانت أداة لمراقبة أداء الأوامر البطيئة، فهي كشفت اختناقات لم أكن أتخيل وجودها في سكربتات كنت أستخدمها يوميًا دون تفكير.'
+      ]},
+    p4: {tag:'ذكاء اصطناعي', tagClass:'tag-mint', title:'هندسة الطلبات: مهارة صغيرة بفارق كبير', meta:'7 أغسطس 2026 · ٤ دقائق',
+      body:[
+        'صياغة الطلب الجيد للنموذج اللغوي تشبه كتابة مواصفات واضحة لمطور آخر: كلما قللت الغموض، كانت النتيجة أقرب لما تريد من أول محاولة.',
+        'من أكثر التقنيات فائدة إعطاء أمثلة على الشكل المطلوب للإجابة، وتحديد ما يجب تجنبه بوضوح بدل الاكتفاء بوصف ما تريده فقط.',
+        'كذلك تقسيم المهمة المعقدة إلى خطوات أصغر داخل الطلب نفسه يقلل الأخطاء بشكل ملحوظ، خصوصًا في المهام التي تتطلب تحليلًا متعدد المراحل.'
+      ]},
+    p5: {tag:'برمجة', tagClass:'tag-coral', title:'لماذا تبدو مشاريعك الشخصية دائمًا ناقصة؟', meta:'30 يوليو 2026 · ٦ دقائق',
+      body:[
+        'كثير من المطورين لديهم مجلد مليء بمشاريع وصلت إلى نسبة ٨٠٪ من الاكتمال ثم توقفت هناك إلى الأبد. المشكلة غالبًا ليست في الوقت، بل في تعريف "الانتهاء" نفسه.',
+        'حين لا يكون هناك تعريف واضح لمتى يعتبر المشروع جاهزًا، يستمر إضافة ميزات جديدة بلا نهاية، بينما تبقى النسخة الأساسية التي يمكن استخدامها فعليًا غير منشورة.',
+        'الحل العملي هو تحديد نسخة أولى محدودة جدًا من البداية، ونشرها ولو كانت بسيطة، ثم البناء عليها تدريجيًا بناءً على استخدام حقيقي لا تخيلات مسبقة.'
+      ]},
+    p6: {tag:'أمان', tagClass:'tag-cyan', title:'دليل سريع لتأمين حساباتك التطويرية', meta:'23 يوليو 2026 · ٥ دقائق',
+      body:[
+        'حساب مطور واحد مخترق قد يكفي للوصول إلى مستودعات خاصة أو حتى بيئة الإنتاج. مع ذلك، لا يزال كثيرون يؤجلون خطوات الحماية الأساسية.',
+        'تفعيل التحقق بخطوتين على جميع الحسابات المرتبطة بالعمل هو أهم خطوة منفردة يمكن اتخاذها، يليه استخدام مفاتيح وصول محدودة الصلاحية بدل كلمات مرور مشتركة بين الخدمات.',
+        'مراجعة الأجهزة والتطبيقات المتصلة بحسابك بشكل دوري، وإلغاء أي صلاحية لم تعد بحاجة إليها، عادة بسيطة توفر الكثير من القلق لاحقًا.'
+      ]}
+  };
+
+  function openPost(id){
+    const p = posts[id];
+    document.getElementById('readerTag').textContent = p.tag;
+    document.getElementById('readerTag').className = 'tag ' + p.tagClass;
+    document.getElementById('readerTitle').textContent = p.title;
+    document.getElementById('readerMeta').textContent = p.meta;
+    document.getElementById('readerBody').innerHTML = p.body.map(par => `<p>${par}</p>`).join('');
+    document.getElementById('overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePost(){
+    document.getElementById('overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('overlay').addEventListener('click', e => {
+    if(e.target.id === 'overlay') closePost();
+  });
+</script>
+
+</body>
+</html>
